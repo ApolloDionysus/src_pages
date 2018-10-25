@@ -1,0 +1,13 @@
+<ul id="list">
+    $for(notes)$
+        <li>
+            <a href="$url$">$title$</a>
+            $if(teaser)$
+            <p>
+                $teaser$
+            </p>
+            <a href="$url$">more</a>
+            $endif$
+        </li>
+    $endfor$
+</ul>
