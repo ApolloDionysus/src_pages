@@ -3,7 +3,7 @@ build:
 	./site rebuild
 	cd ../ApolloDionysus.github.io/ && \
 	git reset --hard && \
-	cp -r ../src_pages/_site/* . && \
+	cp -r ../src/_site/* . && \
 	git add . && \
 	git commit -v && \
 	git push origin master

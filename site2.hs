@@ -29,7 +29,7 @@ main = hakyll $ do
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
-    match (fromList ["music.md"]) $ do
+    match (fromList ["verification.md","pure-math.md","courses.md", "old-courses.md","music.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
@@ -43,7 +43,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    match (fromList ["writing/*","research/*","currently_enrolled_courses/*","past_courses/*","math/*"]) $ do
+    match (fromList ["notes/*","writing/*"]) $ do
         route $ setExtension "html"
         compile $ pandocPostCompiler
             >>= saveSnapshot "content"
@@ -73,10 +73,10 @@ main = hakyll $ do
                  >>= loadAndApplyTemplate "templates/default.html" indexCtx
                  >>= relativizeUrls
 
-    match "writing.html" $ do
+    match (fromList ["notes.html","writing.html"]) $ do
          route idRoute
          compile $ do
-             notes <- loadAll "writing/*"
+             notes <- loadAll "notes/*"
              let noteCtx =
                      listField "notes" teaserCtx (return notes) `mappend`
                      constField "title" "notes"            `mappend`
@@ -86,63 +86,6 @@ main = hakyll $ do
                  >>= applyAsTemplate noteCtx
                  >>= loadAndApplyTemplate "templates/default.html" noteCtx
                  >>= relativizeUrls
-
-    match "research.html" $ do
-         route idRoute
-         compile $ do
-             notes <- loadAll "research/*"
-             let noteCtx =
-                     listField "notes" teaserCtx (return notes) `mappend`
-                     constField "title" "notes"            `mappend`
-                     defaultContext
-
-             getResourceBody
-                 >>= applyAsTemplate noteCtx
-                 >>= loadAndApplyTemplate "templates/default.html" noteCtx
-                 >>= relativizeUrls
-
-    match "courses.html" $ do
-         route idRoute
-         compile $ do
-             notes <- loadAll "currently_enrolled_courses/*"
-             let noteCtx =
-                     listField "notes" teaserCtx (return notes) `mappend`
-                     constField "title" "notes"            `mappend`
-                     defaultContext
-
-             getResourceBody
-                 >>= applyAsTemplate noteCtx
-                 >>= loadAndApplyTemplate "templates/default.html" noteCtx
-                 >>= relativizeUrls
-
-    match "old-courses.html" $ do
-         route idRoute
-         compile $ do
-             notes <- loadAll "past_courses/*"
-             let noteCtx =
-                     listField "notes" teaserCtx (return notes) `mappend`
-                     constField "title" "notes"            `mappend`
-                     defaultContext
-
-             getResourceBody
-                 >>= applyAsTemplate noteCtx
-                 >>= loadAndApplyTemplate "templates/default.html" noteCtx
-                 >>= relativizeUrls
-
-    match "pure-math.html" $ do
-         route idRoute
-         compile $ do
-             notes <- loadAll "math/*"
-             let noteCtx =
-                     listField "notes" teaserCtx (return notes) `mappend`
-                     constField "title" "notes"            `mappend`
-                     defaultContext
-
-             getResourceBody
-                 >>= applyAsTemplate noteCtx
-                 >>= loadAndApplyTemplate "templates/default.html" noteCtx
-                 >>= relativizeUrls
-
 
     match "templates/*" $ compile templateCompiler
 

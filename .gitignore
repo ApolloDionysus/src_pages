@@ -3,3 +3,7 @@ _site
 site
 site.hi
 site.o
+_cache
+css
+*.html
+templates
